@@ -16,10 +16,23 @@ public class playerController : MonoBehaviour
     public Transform groundCheck;
     public float groundcheckradius;
     public LayerMask colLayer;
+    public SpriteRenderer spriteRenderer;
+
+    public static playerController instance;
+
+    private void Awake(){
+        if(instance != null)
+        {
+            
+            return;
+        }
+        instance = this;
+    }
     
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     void Update()
@@ -32,13 +45,17 @@ public class playerController : MonoBehaviour
             isJumping = true;
             
         }
+
+        Flip(rb.velocity.x);
     }
      void FixedUpdate()
     {        
         
         Move(movement);
+
     }
 
+    
     void Move(float _movement)
     {
         Vector3 targetvelocity = new Vector2(movement * speed * Time.deltaTime, rb.velocity.y);
@@ -49,6 +66,20 @@ public class playerController : MonoBehaviour
             isJumping = false;
         }
     }
+
+    void Flip(float _velocity)
+    {
+        if(_velocity > 0.1f)
+        {
+            spriteRenderer.flipX = false;
+        }
+        else if(_velocity < -0.1f)
+        {
+            spriteRenderer.flipX = true;
+        }
+    }
+
+   
 
     private void OnDrawGizmos()
     {
