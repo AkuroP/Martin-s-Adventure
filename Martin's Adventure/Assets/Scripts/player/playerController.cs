@@ -12,10 +12,12 @@ public class playerController : MonoBehaviour
     public bool isGrounded = false;
     private float movement;
     private Vector3 velocity = Vector3.zero;
-    private Rigidbody2D rb;
+    [HideInInspector]
+    public Rigidbody2D rb;
     public Transform groundCheck;
     public float groundcheckradius;
     public LayerMask colLayer;
+    [HideInInspector]
     public SpriteRenderer spriteRenderer;
 
     public static playerController instance;
